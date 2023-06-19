@@ -8,6 +8,8 @@ import { auth } from '@/auth'
 import { type Chat } from '@/lib/types'
 
 export async function getChats(userId?: string | null) {
+  const session = await auth()
+
   if (!userId) {
     return []
   }
@@ -103,7 +105,7 @@ export async function shareChat(chat: Chat) {
 
   if (!session?.user?.id || session.user.id !== chat.userId) {
     return {
-      error: 'Unauthorized'
+      error: 'Unauthorized',
     }
   }
 
